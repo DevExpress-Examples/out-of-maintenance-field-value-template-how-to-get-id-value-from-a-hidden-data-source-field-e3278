@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="vb" AutoEventWireup="true"  CodeFile="Default.aspx.vb" Inherits="_Default" %>
 
-<%@ Register assembly="DevExpress.Web.ASPxPivotGrid.v13.1, Version=13.1.14.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" namespace="DevExpress.Web.ASPxPivotGrid" tagprefix="dx" %>
+<%@ Register assembly="DevExpress.Web.ASPxPivotGrid.v21.2, Version=21.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" namespace="DevExpress.Web.ASPxPivotGrid" tagprefix="dx" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -13,21 +13,25 @@
     <div>
 
         <dx:ASPxPivotGrid ID="ASPxPivotGrid1" runat="server" 
-            DataSourceID="AccessDataSource1">
+            DataSourceID="SqlDataSource1" ClientIDMode="AutoID" IsMaterialDesign="False"
+            OptionsData-DataProcessingEngine ="Optimized">
             <Fields>
-                <dx:PivotGridField ID="fieldProductName" AreaIndex="0" 
-                    FieldName="ProductName" Area="RowArea">
+                <dx:PivotGridField ID="fieldProductName" AreaIndex="0" Area="RowArea">
+                    <DataBindingSerializable>
+                        <dx:DataSourceColumnBinding ColumnName="ProductName" />
+                    </DataBindingSerializable>
                 </dx:PivotGridField>
-                <dx:PivotGridField ID="fieldUnitPrice" Area="DataArea" AreaIndex="0" 
-                    FieldName="UnitPrice">
+                <dx:PivotGridField ID="fieldUnitPrice" Area="DataArea" AreaIndex="0">
+                    <DataBindingSerializable>
+                        <dx:DataSourceColumnBinding ColumnName="UnitPrice" />
+                    </DataBindingSerializable>
                 </dx:PivotGridField>
             </Fields>
         </dx:ASPxPivotGrid>
-        <asp:AccessDataSource ID="AccessDataSource1" runat="server" 
-            DataFile="~/App_Data/nwind.mdb" 
-            SelectCommand="SELECT [ProductID], [ProductName], [UnitPrice] FROM [OrderReports]">
-        </asp:AccessDataSource>
-
+        <asp:SqlDataSource ID="SqlDataSource1" runat="server" 
+            ConnectionString="<%$ ConnectionStrings:ConnectionString %>" 
+            ProviderName="<%$ ConnectionStrings:ConnectionString.ProviderName %>" 
+            SelectCommand="SELECT [ProductID], [ProductName], [UnitPrice] FROM [OrderReports]"></asp:SqlDataSource>
     </div>
     </form>
 </body>
